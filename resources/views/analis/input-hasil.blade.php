@@ -325,7 +325,8 @@ $('#formHasilUji').on('submit', function(e) {
       }).then(() => {
         // Optional: reset form
         // $('#formHasilUji')[0].reset();
-        // location.reload();
+        // location.reload(); ke route ini analis.dataanalisa
+        window.location.href = "{{ route('analis.dataanalisa') }}";
       });
     },
     error: function(err) {

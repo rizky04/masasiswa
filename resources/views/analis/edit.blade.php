@@ -329,7 +329,15 @@ $('#formHasilUji').on('submit', function(e) {
       Swal.fire({title: 'Sedang menyimpan...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
     },
     success: function(res) {
-      Swal.fire({icon: 'success', title: 'Berhasil!', text: 'Data berhasil diperbarui.'});
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Data berhasil diperbarui.'}).then(() => {
+        // Optional: reset form
+        // $('#formHasilUji')[0].reset();
+        // location.reload(); ke route ini analis.dataanalisa
+        window.location.href = "{{ route('analis.dataanalisa') }}";
+      });
     },
     error: function(err) {
       Swal.fire({icon: 'error', title: 'Gagal!', text: 'Terjadi kesalahan saat menyimpan.'});

@@ -19,9 +19,9 @@
 
         header {
             position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 3cm;
         }
 
@@ -30,7 +30,6 @@
             height: auto;
         }
 
-        /* ✅ Watermark menutupi seluruh halaman */
         .watermark {
             position: fixed;
             top: 0;
@@ -38,15 +37,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* opacity: 0.08; */
+            opacity: 0.08;
             z-index: -1;
         }
 
         footer {
             position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
+            bottom: 0;
+            left: 0;
+            right: 0;
             height: 2cm;
             text-align: center;
             font-size: 10px;
@@ -69,64 +68,54 @@
             margin-bottom: 20px;
         }
 
-        /* ===== TABEL GAYA PROFESIONAL ===== */
+        /* ===== TABEL TANPA GARIS, RAPI SEMUA KASUS ===== */
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 6px;
             font-size: 12pt;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            table-layout: fixed; /* jaga lebar kolom tetap */
         }
 
-        th, td {
-            padding: 6px 10px;
-            vertical-align: top;
-            text-align: left;
-            border: none;
+        td {
+            padding: 6px 8px;
+            vertical-align: middle;
+            word-wrap: break-word;
         }
 
-        table th:nth-child(1),
-        table td:nth-child(1) {
-            width: 28%;
+        /* Untuk tabel 2 kolom */
+        table.two-cols td:first-child {
+            width: 40%;
+            font-weight: 500;
+        }
+        table.two-cols td:last-child {
+            width: 60%;
         }
 
-        table th:nth-child(2),
-        table td:nth-child(2) {
+        /* Untuk tabel 3 kolom */
+        table.three-cols td:nth-child(1) {
+            width: 30%;
+        }
+        table.three-cols td:nth-child(2),
+        table.three-cols td:nth-child(3) {
             width: 35%;
         }
 
-        table th:nth-child(3),
-        table td:nth-child(3) {
-            width: 37%;
-        }
-
-        /* ===== JARAK ANTAR BAGIAN ===== */
-        .section-title {
-            font-weight: bold;
-            margin-top: 25px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        p {
-            margin: 5px 0;
-            text-align: justify;
+        /* Untuk tabel 4 kolom */
+        table.four-cols td {
+            width: 25%;
         }
 
         .page-break {
             page-break-before: always;
         }
 
-        /* ===== TANDA TANGAN ===== */
-        .signature {
-            text-align: right;
-            margin-top: 60px;
-            line-height: 1.5;
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 5px;
         }
-
-        .signature strong {
-            display: block;
-        }
-
     </style>
 </head>
 
@@ -140,7 +129,8 @@
     <main>
         <h1>LAPORAN HASIL UJI</h1>
 
-        <table>
+        <!-- 2 kolom -->
+        <table class="two-cols">
             <tr><td>Tanggal Laporan</td><td>: {{ $data['tanggal_laporan'] ?? '-' }}</td></tr>
             <tr><td>Nomor Analisa</td><td>: {{ $data['nopcanalisa'] ?? '-' }}</td></tr>
             <tr><td>Nama Pemohon</td><td>: {{ $data['pemohon'] ?? '-' }}</td></tr>
@@ -154,29 +144,28 @@
         <div class="page-break"></div>
         <h1>HASIL UJI</h1>
 
-        <!-- 1. Contoh Uji -->
         <div class="section-title">1. Contoh Uji</div>
         @if($analisa->contohUji)
-            <p>{!! nl2br($analisa->contohUji->contoh_uji) !!}</p>
-            @if($analisa->contohUji->image)
-                <div style="text-align:center; margin-top:10px;">
+            <div class="mb-3 p-3 border rounded bg-light">
+                <p>{!! nl2br($analisa->contohUji->contoh_uji) !!}</p>
+                @if($analisa->contohUji->image)
                     <img src="{{ public_path($analisa->contohUji->image) }}" alt="Contoh Uji" height="200" width="200">
-                </div>
-            @endif
+                @endif
+            </div>
         @else
             <p>-</p>
         @endif
 
-        <!-- 2. Data Teknis -->
         <div class="section-title">2. Data Teknis <br>A. Uji Kemasan</div>
+        <h1>Hasil Uji</h1>
         @if($analisa->dataTeknisKemasan)
-            <table>
+            <table class="three-cols">
                 <tbody>
                     @foreach($analisa->dataTeknisKemasan ?? [] as $i => $prog)
                     <tr>
+                        <td style="text-align:center;">{{ $i + 1 }}</td>
                         <td>{!! $prog->nama_teknis_kemasan ?? '-' !!}</td>
                         <td>{!! $prog->subject_teknis_kemasan ?? '-' !!}</td>
-                        <td>{!! $prog->keterangan_teknis_kemasan ?? '' !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -185,15 +174,15 @@
             <p>-</p>
         @endif
 
+        <h1>Hasil Uji</h1>
         <div class="section-title">B. Data Teknik Identifikasi</div>
         @if($analisa->dataTeknisIdentifikasi)
-            <table>
+            <table class="two-cols">
                 <tbody>
                     @foreach($analisa->dataTeknisIdentifikasi ?? [] as $i => $prog)
                     <tr>
                         <td>{!! $prog->nama_teknis_identifikasi ?? '-' !!}</td>
                         <td>{!! $prog->subject_teknis_identifikasi ?? '-' !!}</td>
-                        <td>{!! $prog->keterangan_teknis_identifikasi ?? '' !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -202,48 +191,39 @@
             <p>-</p>
         @endif
 
-        <!-- 3. Data Program Uji -->
+        <h1>Hasil Uji</h1>
         <div class="section-title">3. Data Program Uji</div>
-        @if($analisa->programUji)
-            <table>
-                <tbody>
-                    @foreach($analisa->programUji ?? [] as $i => $prog)
-                    <tr>
-                        <td>{{ $prog->jenis_program_uji ?? '-' }}</td>
-                        <td>{{ $prog->nama_program_uji ?? '-' }}</td>
-                        <td>{!! $prog->subject_program_uji ?? '-' !!}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>-</p>
-        @endif
+        <table class="three-cols">
+            <tbody>
+                @foreach($analisa->programUji ?? [] as $i => $prog)
+                <tr>
+                    <td>{{ $prog->jenis_program_uji ?? '-' }}</td>
+                    <td>{{ $prog->nama_program_uji ?? '-' }}</td>
+                    <td>{!! $prog->subject_program_uji ?? '-' !!}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-        <!-- 4. Data Hasil Uji -->
+        <h1>Hasil Uji</h1>
         <div class="section-title">4. Data Hasil Uji</div>
-        @if($analisa->dataHasilUji)
-            <table>
-                <tbody>
-                    @foreach($analisa->dataHasilUji ?? [] as $i => $hasil)
-                    <tr>
-                        <td>{{ $hasil->jenis_program_uji ?? '-' }}</td>
-                        <td>{{ $hasil->nama_hasil_uji ?? '-' }}</td>
-                        <td>{!! $hasil->keterangan_hasil_uji ?? '' !!}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>-</p>
-        @endif
+        <table class="two-cols">
+            <tbody>
+                @foreach($analisa->dataHasilUji ?? [] as $i => $hasil)
+                <tr>
+                    <td>{{ $hasil->jenis_program_uji ?? '-' }}</td>
+                    <td>{{ $hasil->nama_hasil_uji ?? '-' }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-        <!-- 5. Kesimpulan -->
+        <h1>Hasil Uji</h1>
         <div class="section-title">5. Kesimpulan</div>
         <p>{!! $analisa->kesimpulanUji->first()->kesimpulan_uji ?? '-' !!}</p>
 
-        <!-- Tanda tangan -->
-        <div class="signature">
+        <br><br>
+        <div style="text-align:right; margin-top:50px;">
             <strong>Manajer Teknis Aneka Kemasan, Produk dan Bahan</strong><br><br>
             <em>Dokumen ini ditandatangani secara elektronik oleh:</em><br><br>
             <strong>Roni Cristiono</strong>
@@ -252,4 +232,5 @@
 
     <footer></footer>
 </body>
+
 </html>
