@@ -146,7 +146,11 @@
             <tr><td>Nama Pemohon</td><td>: {{ $data['pemohon'] ?? '-' }}</td></tr>
             <tr><td>Alamat</td><td>: {{ $data['alamat'] ?? '-' }}</td></tr>
             <tr><td>Alamat Pabrik</td><td>: {{ $data['alamat_pabrik'] ?? '-' }}</td></tr>
-            <tr><td>Nama Contoh</td><td>: {!! $analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-' !!}</td></tr>
+            {{-- <tr><td>Nama Contoh</td><td>: {!! nl2br($analisa->contohUji->contoh_uji) !!}</td></tr> --}}
+            <tr>
+    <td>Nama Contoh</td>
+    <td style="white-space: pre-line;">: {{ strip_tags($analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-') }}</td>
+</tr>
             <tr><td>Tanggal Penerimaan Contoh</td><td>: {{ $data['tgl_terima'] ?? '-' }}</td></tr>
             <tr><td>Tanggal Pengujian</td><td>: {{ $data['tgl_uji'] ?? '-' }}</td></tr>
         </table>
