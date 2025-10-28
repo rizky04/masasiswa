@@ -15,6 +15,7 @@
             margin: 4cm 2cm 2.5cm 2cm;
             position: relative;
             line-height: 1.4;
+            font-size: 12pt;
         }
 
         header {
@@ -30,7 +31,6 @@
             height: auto;
         }
 
-        /* ✅ Watermark menutupi seluruh halaman */
         .watermark {
             position: fixed;
             top: 0;
@@ -38,7 +38,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* opacity: 0.08; */
             z-index: -1;
         }
 
@@ -56,10 +55,8 @@
         main {
             position: relative;
             z-index: 1;
-            margin-top: 0.5cm;
             width: 90%;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
         }
 
         h1 {
@@ -69,54 +66,43 @@
             margin-bottom: 20px;
         }
 
-        /* ===== TABEL GAYA PROFESIONAL ===== */
+        /* ===== HILANGKAN GARIS TABEL ===== */
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10pt;
-            margin-bottom: 5px;
+            margin-bottom: 14px;
         }
 
-        th, td {
-            /* padding: 6px 10px; */
+        tr {
+            margin-bottom: 4px;
+        }
+
+        td {
+            border: none !important;
+            padding: 5px 5px;
             vertical-align: top;
             text-align: left;
+            white-space: pre-line;
+        }
+
+        .no-border td {
             border: none;
+            padding: 3px 5px;
         }
 
-        /* table th:nth-child(1),
-        table td:nth-child(1) {
-            width: 28%;
-        }
-
-        table th:nth-child(2),
-        table td:nth-child(2) {
-            width: 35%;
-        }
-
-        table th:nth-child(3),
-        table td:nth-child(3) {
-            width: 37%;
-        } */
-
-        /* ===== JARAK ANTAR BAGIAN ===== */
         .section-title {
             font-weight: bold;
             margin-top: 25px;
             margin-bottom: 8px;
             text-transform: uppercase;
-        }
-
-        p {
-            margin: 5px 0;
-            text-align: justify;
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
         }
 
         .page-break {
             page-break-before: always;
         }
 
-        /* ===== TANDA TANGAN ===== */
         .signature {
             text-align: right;
             margin-top: 60px;
@@ -127,6 +113,10 @@
             display: block;
         }
 
+        p {
+            margin: 4px 0;
+            text-align: justify;
+        }
     </style>
 </head>
 
@@ -140,17 +130,16 @@
     <main>
         <h1>LAPORAN HASIL UJI</h1>
 
-        <table>
+        <table class="no-border">
             <tr><td>Tanggal Laporan</td><td>: {{ $data['tanggal_laporan'] ?? '-' }}</td></tr>
             <tr><td>Nomor Analisa</td><td>: {{ $data['nopcanalisa'] ?? '-' }}</td></tr>
             <tr><td>Nama Pemohon</td><td>: {{ $data['pemohon'] ?? '-' }}</td></tr>
             <tr><td>Alamat</td><td>: {{ $data['alamat'] ?? '-' }}</td></tr>
             <tr><td>Alamat Pabrik</td><td>: {{ $data['alamat_pabrik'] ?? '-' }}</td></tr>
-            {{-- <tr><td>Nama Contoh</td><td>: {!! nl2br($analisa->contohUji->contoh_uji) !!}</td></tr> --}}
             <tr>
-    <td>Nama Contoh</td>
-    <td style="white-space: pre-line;">: {{ html_entity_decode(strip_tags($analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-')) }}</td>
-</tr>
+                <td>Nama Contoh</td>
+                <td style="white-space: pre-line;">: {{ strip_tags($analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-') }}</td>
+            </tr>
             <tr><td>Tanggal Penerimaan Contoh</td><td>: {{ $data['tgl_terima'] ?? '-' }}</td></tr>
             <tr><td>Tanggal Pengujian</td><td>: {{ $data['tgl_uji'] ?? '-' }}</td></tr>
         </table>
@@ -161,7 +150,7 @@
         <!-- 1. Contoh Uji -->
         <div class="section-title">1. Contoh Uji</div>
         @if($analisa->contohUji)
-            <p>{{ html_entity_decode(strip_tags($analisa->contohUji->contoh_uji)) }}</p>
+            <p>{!! nl2br(strip_tags($analisa->contohUji->contoh_uji)) !!}</p>
             @if($analisa->contohUji->image)
                 <div style="text-align:center; margin-top:10px;">
                     <img src="{{ public_path($analisa->contohUji->image) }}" alt="Contoh Uji" height="200" width="200">
@@ -172,14 +161,18 @@
         @endif
 
         <!-- 2. Data Teknis -->
-        <div class="section-title">2. Data Teknis <br>A. Uji Kemasan</div>
-        @if($analisa->dataTeknisKemasan)
+        <div class="section-title">2. Data Teknis</div>
+
+        <!-- A. Uji Kemasan -->
+        <div class="section-title" style="font-size: 13pt; margin-top: 10px;">A. Uji Kemasan</div>
+        @if($analisa->dataTeknisKemasan && count($analisa->dataTeknisKemasan) > 0)
             <table>
                 <tbody>
-                    @foreach($analisa->dataTeknisKemasan ?? [] as $i => $prog)
+                    @foreach($analisa->dataTeknisKemasan as $prog)
                     <tr>
-                        <td style="width: 35%">{{ html_entity_decode(strip_tags($prog->subject_teknis_kemasan) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_teknis_kemasan )?? '-') }}</td>
+                        <td>{!! nl2br(strip_tags($prog->nama_teknis_kemasan ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->subject_teknis_kemasan ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->keterangan_teknis_kemasan ?? '')) !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -188,14 +181,16 @@
             <p>-</p>
         @endif
 
-        <div class="section-title">B. Data Teknik Identifikasi</div>
-        @if($analisa->dataTeknisIdentifikasi)
+        <!-- B. Data Teknik Identifikasi -->
+        <div class="section-title" style="font-size: 13pt;">B. Data Teknik Identifikasi</div>
+        @if($analisa->dataTeknisIdentifikasi && count($analisa->dataTeknisIdentifikasi) > 0)
             <table>
                 <tbody>
-                    @foreach($analisa->dataTeknisIdentifikasi ?? [] as $i => $prog)
+                    @foreach($analisa->dataTeknisIdentifikasi as $prog)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_teknis_identifikasi) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->subject_teknis_identifikasi) ?? '-') }}</td>
+                        <td>{!! nl2br(strip_tags($prog->nama_teknis_identifikasi ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->subject_teknis_identifikasi ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->keterangan_teknis_identifikasi ?? '')) !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -206,14 +201,14 @@
 
         <!-- 3. Data Program Uji -->
         <div class="section-title">3. Data Program Uji</div>
-        @if($analisa->programUji)
+        @if($analisa->programUji && count($analisa->programUji) > 0)
             <table>
                 <tbody>
-                    @foreach($analisa->programUji ?? [] as $i => $prog)
+                    @foreach($analisa->programUji as $prog)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($prog->jenis_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->subject_program_uji) ?? '-') }}</td>
+                        <td>{!! nl2br(strip_tags($prog->jenis_program_uji ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->nama_program_uji ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($prog->subject_program_uji ?? '-')) !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -224,13 +219,14 @@
 
         <!-- 4. Data Hasil Uji -->
         <div class="section-title">4. Data Hasil Uji</div>
-        @if($analisa->dataHasilUji)
+        @if($analisa->dataHasilUji && count($analisa->dataHasilUji) > 0)
             <table>
                 <tbody>
-                    @foreach($analisa->dataHasilUji ?? [] as $i => $hasil)
+                    @foreach($analisa->dataHasilUji as $hasil)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($hasil->jenis_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($hasil->nama_hasil_uji) ?? '-') }}</td>
+                        <td>{!! nl2br(strip_tags($hasil->jenis_program_uji ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($hasil->nama_hasil_uji ?? '-')) !!}</td>
+                        <td>{!! nl2br(strip_tags($hasil->keterangan_hasil_uji ?? '')) !!}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -241,7 +237,7 @@
 
         <!-- 5. Kesimpulan -->
         <div class="section-title">5. Kesimpulan</div>
-        <p>{{ html_entity_decode(strip_tags($analisa->kesimpulanUji->first()->kesimpulan_uji) ?? '-') }}</p>
+        <p>{!! nl2br(strip_tags($analisa->kesimpulanUji->first()->kesimpulan_uji ?? '-')) !!}</p>
 
         <!-- Tanda tangan -->
         <div class="signature">

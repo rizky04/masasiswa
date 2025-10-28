@@ -73,18 +73,18 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10pt;
-            margin-bottom: 5px;
+            font-size: 12pt;
+            margin-bottom: 15px;
         }
 
         th, td {
-            /* padding: 6px 10px; */
+            padding: 6px 10px;
             vertical-align: top;
             text-align: left;
             border: none;
         }
 
-        /* table th:nth-child(1),
+        table th:nth-child(1),
         table td:nth-child(1) {
             width: 28%;
         }
@@ -97,7 +97,7 @@
         table th:nth-child(3),
         table td:nth-child(3) {
             width: 37%;
-        } */
+        }
 
         /* ===== JARAK ANTAR BAGIAN ===== */
         .section-title {
@@ -149,7 +149,7 @@
             {{-- <tr><td>Nama Contoh</td><td>: {!! nl2br($analisa->contohUji->contoh_uji) !!}</td></tr> --}}
             <tr>
     <td>Nama Contoh</td>
-    <td style="white-space: pre-line;">: {{ html_entity_decode(strip_tags($analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-')) }}</td>
+    <td style="white-space: pre-line;">: {{ strip_tags($analisa->contohUji->contoh_uji ?? $data['nama_contoh'] ?? '-') }}</td>
 </tr>
             <tr><td>Tanggal Penerimaan Contoh</td><td>: {{ $data['tgl_terima'] ?? '-' }}</td></tr>
             <tr><td>Tanggal Pengujian</td><td>: {{ $data['tgl_uji'] ?? '-' }}</td></tr>
@@ -161,7 +161,7 @@
         <!-- 1. Contoh Uji -->
         <div class="section-title">1. Contoh Uji</div>
         @if($analisa->contohUji)
-            <p>{{ html_entity_decode(strip_tags($analisa->contohUji->contoh_uji)) }}</p>
+            <p>{!! nl2br($analisa->contohUji->contoh_uji) !!}</p>
             @if($analisa->contohUji->image)
                 <div style="text-align:center; margin-top:10px;">
                     <img src="{{ public_path($analisa->contohUji->image) }}" alt="Contoh Uji" height="200" width="200">
@@ -178,8 +178,9 @@
                 <tbody>
                     @foreach($analisa->dataTeknisKemasan ?? [] as $i => $prog)
                     <tr>
-                        <td style="width: 35%">{{ html_entity_decode(strip_tags($prog->subject_teknis_kemasan) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_teknis_kemasan )?? '-') }}</td>
+                        <td>{{ strip_tags($prog->nama_teknis_kemasan )?? '-' }}</td>
+                        <td>{{ strip_tags($prog->subject_teknis_kemasan) ?? '-' }}</td>
+                        <td>{{ strip_tags($prog->keterangan_teknis_kemasan) ?? '' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -194,8 +195,9 @@
                 <tbody>
                     @foreach($analisa->dataTeknisIdentifikasi ?? [] as $i => $prog)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_teknis_identifikasi) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->subject_teknis_identifikasi) ?? '-') }}</td>
+                        <td>{{ strip_tags($prog->nama_teknis_identifikasi) ?? '-' }}</td>
+                        <td>{{ strip_tags($prog->subject_teknis_identifikasi) ?? '-' }}</td>
+                        <td>{{ strip_tags($prog->keterangan_teknis_identifikasi) ?? '' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -211,9 +213,9 @@
                 <tbody>
                     @foreach($analisa->programUji ?? [] as $i => $prog)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($prog->jenis_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->nama_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($prog->subject_program_uji) ?? '-') }}</td>
+                        <td>{{ strip_tags($prog->jenis_program_uji) ?? '-' }}</td>
+                        <td>{{ strip_tags($prog->nama_program_uji) ?? '-' }}</td>
+                        <td>{{ strip_tags($prog->subject_program_uji) ?? '-' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -229,8 +231,9 @@
                 <tbody>
                     @foreach($analisa->dataHasilUji ?? [] as $i => $hasil)
                     <tr>
-                        <td>{{ html_entity_decode(strip_tags($hasil->jenis_program_uji) ?? '-') }}</td>
-                        <td>{{ html_entity_decode(strip_tags($hasil->nama_hasil_uji) ?? '-') }}</td>
+                        <td>{{ strip_tags($hasil->jenis_program_uji) ?? '-' }}</td>
+                        <td>{{ strip_tags($hasil->nama_hasil_uji) ?? '-' }}</td>
+                        <td>{{ strip_tags($hasil->keterangan_hasil_uji) ?? '' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -241,7 +244,7 @@
 
         <!-- 5. Kesimpulan -->
         <div class="section-title">5. Kesimpulan</div>
-        <p>{{ html_entity_decode(strip_tags($analisa->kesimpulanUji->first()->kesimpulan_uji) ?? '-') }}</p>
+        <p>{{ strip_tags($analisa->kesimpulanUji->first()->kesimpulan_uji) ?? '-' }}</p>
 
         <!-- Tanda tangan -->
         <div class="signature">
