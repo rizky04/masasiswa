@@ -82,8 +82,12 @@
                                         class="btn btn-info btn-sm mt-2" target="_blank" title="Lihat LHU">
                                         <i class="fas fa-eye"></i>
                                     </a>
+                                                                     <a href="{{ route('pengujian.pdf', ['id' => $an->id_pcanalisa]) }}"
+   class="btn btn-primary btn-sm" target="_blank">
+   <i class="fas fa-file-pdf"></i> Cetak PDF
+</a>
                                 </td>
-                                
+
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center" style="gap: 5px;">
                                         <button class="btn btn-success btn-sm px-3 btn-validasi"
