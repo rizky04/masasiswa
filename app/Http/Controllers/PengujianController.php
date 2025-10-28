@@ -27,17 +27,17 @@ class PengujianController extends Controller
         // ==========================
         $validated = $request->validate([
             'id_pcanalisa' => 'required|exists:pcanalisa,id_pcanalisa',
-            'contoh_uji' => 'required|string',
+            'contoh_uji' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'subject_uji.*' => 'required|string',
+            'subject_uji.*' => 'nullable|string',
             'content_uji.*' => 'nullable|string',
-            'nama_teknis_identifikasi.*' => 'required|string',
+            'nama_teknis_identifikasi.*' => 'nullable|string',
             'subject_teknis_identifikasi.*' => 'nullable|string',
-            'nama_program_uji.*' => 'required|string',
+            'nama_program_uji.*' => 'nullable|string',
             'subject_program_uji.*' => 'nullable|string',
-            'jenis_program_uji.*' => 'required|string',
-            'nama_hasil_uji.*' => 'required|string',
-            'jenis_program_uji_hasil.*' => 'required|string', // supaya beda dengan program uji
+            'jenis_program_uji.*' => 'nullable|string',
+            'nama_hasil_uji.*' => 'nullable|string',
+            'jenis_program_uji_hasil.*' => 'nullable|string', // supaya beda dengan program uji
             'kesimpulan_uji' => 'nullable|string',
         ]);
 
