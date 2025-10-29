@@ -65,8 +65,8 @@
                 <tbody>
                     @foreach($analisa->dataTeknisKemasan as $item)
                         <tr>
+                             <td>{!! nl2br($item->subject_teknis_kemasan) !!}</td>
                              <td>{!! nl2br($item->nama_teknis_kemasan) !!}</td>
-                            <td>{!! nl2br($item->subject_teknis_kemasan) !!}</td>
                         </tr>
                     @endforeach
                 </tbody>
