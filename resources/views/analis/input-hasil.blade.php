@@ -61,7 +61,7 @@
         <div class="form-row data-teknis-item mb-3 p-3 border rounded bg-light">
           <div class="form-group col-md-5">
             <label>Subject Uji Kemasan</label>
-            <input type="text" name="subject_uji[]" class="form-control" required>
+            <input type="text" name="subject_uji[]" class="form-control">
           </div>
           <div class="form-group col-md-6">
             <label>Content Subject Uji Kemasan</label>
@@ -84,7 +84,7 @@
         <div class="form-row data-identifikasi-item mb-3 p-3 border rounded bg-light">
           <div class="form-group col-md-5">
             <label>Nama Teknis Identifikasi</label>
-            <input type="text" name="nama_teknis_identifikasi[]" class="form-control" required>
+            <input type="text" name="nama_teknis_identifikasi[]" class="form-control">
           </div>
           <div class="form-group col-md-6">
             <label>Subject Teknis Identifikasi</label>
@@ -107,7 +107,7 @@
         <div class="form-row program-uji-item mb-3 p-3 border rounded bg-light">
           <div class="form-group col-md-3">
             <label>Jenis Program Uji</label>
-            <select name="jenis_program_uji[]" class="form-control" required>
+            <select name="jenis_program_uji[]" class="form-control">
               <option value="">-- Pilih Jenis --</option>
               <option value="Uji Jatuh">Uji Jatuh</option>
               <option value="Uji Kebocoran">Uji Kebocoran</option>
@@ -117,7 +117,7 @@
           </div>
           <div class="form-group col-md-4">
             <label>Nama Program Uji</label>
-            <input type="text" name="nama_program_uji[]" class="form-control" required>
+            <input type="text" name="nama_program_uji[]" class="form-control">
           </div>
           <div class="form-group col-md-4">
             <label>Subject Program Uji</label>
@@ -140,7 +140,7 @@
         <div class="form-row hasil-uji-item mb-3 p-3 border rounded bg-light">
           <div class="form-group col-md-3">
             <label>Jenis Program Uji</label>
-            <select name="jenis_program_uji_hasil[]" class="form-control" required>
+            <select name="jenis_program_uji_hasil[]" class="form-control">
               <option value="">-- Pilih Jenis --</option>
               <option value="Uji Jatuh">Uji Jatuh</option>
               <option value="Uji Kebocoran">Uji Kebocoran</option>
@@ -150,7 +150,7 @@
           </div>
           <div class="form-group col-md-8">
             <label>Nama Hasil Uji</label>
-            <input type="text" name="nama_hasil_uji[]" class="form-control" required>
+            <input type="text" name="nama_hasil_uji[]" class="form-control">
           </div>
           <div class="form-group col-md-1 d-flex align-items-center justify-content-center">
             <button type="button" class="btn btn-outline-danger btn-sm btn-remove"><i class="fas fa-trash"></i></button>
@@ -205,7 +205,7 @@ const sections = [
   {btn: '#addDataTeknis', wrap: '#dataTeknisWrapper', html: `<div class="form-row data-teknis-item mb-3 p-3 border rounded bg-light">
     <div class="form-group col-md-5">
       <label>Subject Uji Kemasan</label>
-      <input type="text" name="subject_uji[]" class="form-control" required>
+      <input type="text" name="subject_uji[]" class="form-control">
     </div>
     <div class="form-group col-md-6">
       <label>Content Subject Uji Kemasan</label>
@@ -218,7 +218,7 @@ const sections = [
   {btn: '#addDataIdentifikasi', wrap: '#dataIdentifikasiWrapper', html: `<div class="form-row data-identifikasi-item mb-3 p-3 border rounded bg-light">
     <div class="form-group col-md-5">
       <label>Nama Teknis Identifikasi</label>
-      <input type="text" name="nama_teknis_identifikasi[]" class="form-control" required>
+      <input type="text" name="nama_teknis_identifikasi[]" class="form-control">
     </div>
     <div class="form-group col-md-6">
       <label>Subject Teknis Identifikasi</label>
@@ -231,7 +231,7 @@ const sections = [
   {btn: '#addProgramUji', wrap: '#programUjiWrapper', html: `<div class="form-row program-uji-item mb-3 p-3 border rounded bg-light">
     <div class="form-group col-md-3">
       <label>Jenis Program Uji</label>
-      <select name="jenis_program_uji[]" class="form-control" required>
+      <select name="jenis_program_uji[]" class="form-control">
         <option value="">-- Pilih Jenis --</option>
         <option value="Uji Jatuh">Uji Jatuh</option>
         <option value="Uji Kebocoran">Uji Kebocoran</option>
@@ -241,7 +241,7 @@ const sections = [
     </div>
     <div class="form-group col-md-4">
       <label>Nama Program Uji</label>
-      <input type="text" name="nama_program_uji[]" class="form-control" required>
+      <input type="text" name="nama_program_uji[]" class="form-control">
     </div>
     <div class="form-group col-md-4">
       <label>Subject Program Uji</label>
@@ -254,7 +254,7 @@ const sections = [
   {btn: '#addHasilUji', wrap: '#hasilUjiWrapper', html: `<div class="form-row hasil-uji-item mb-3 p-3 border rounded bg-light">
     <div class="form-group col-md-3">
       <label>Jenis Program Uji</label>
-      <select name="jenis_program_uji_hasil[]" class="form-control" required>
+      <select name="jenis_program_uji_hasil[]" class="form-control">
         <option value="">-- Pilih Jenis --</option>
         <option value="Uji Jatuh">Uji Jatuh</option>
         <option value="Uji Kebocoran">Uji Kebocoran</option>
@@ -264,7 +264,7 @@ const sections = [
     </div>
     <div class="form-group col-md-8">
       <label>Nama Hasil Uji</label>
-      <input type="text" name="nama_hasil_uji[]" class="form-control" required>
+      <input type="text" name="nama_hasil_uji[]" class="form-control">
     </div>
     <div class="form-group col-md-1 d-flex align-items-center justify-content-center">
       <button type="button" class="btn btn-outline-danger btn-sm btn-remove"><i class="fas fa-trash"></i></button>
